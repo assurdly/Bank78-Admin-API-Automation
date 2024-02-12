@@ -18,10 +18,10 @@ jobs:
           npm install -g newman newman-reporter-allure
           echo "Newman and newman-reporter-allure installed."
 
-      - name: Run Retail Postman tests
+      - name: Run Admin Postman tests
         run: |
-           newman run Postman-Collections/Retail-API-Bank78.json -e ADMIN_API_COLLECTION/BANK78_ENV_postman_environment.json --reporters cli,allure
-           echo "Customer Postman tests run."
+           newman runAdmin_API_Collections/Admin_API_QA.json -e "https://lively-capsule-274334.postman.co/workspace/Bank-78~e0f123d1-464d-4aed-987e-aff85f3e8260/environment/28334184-85064f57-f1e6-49be-b65e-869d1142ff52?action=share&creator=28334184" --reporters cli,allure
+           echo "Admin Postman tests run."
            
       - name: Proceed with workflow
         run: |     
@@ -66,7 +66,7 @@ jobs:
             cat "$summary_path"  # Print content before
 
             # Use sed to update the content within the <h2> element
-            sudo sed -i 's/Allure Report/Bank78 Retail - API Quality Readiness/' "$summary_path"
+            sudo sed -i 's/Allure Report/Bank78 Admin - API Quality Readiness/' "$summary_path"
 
             cat "$summary_path"  # Print content after
           else
