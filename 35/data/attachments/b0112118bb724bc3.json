@@ -1,0 +1,9 @@
+{
+    "Date": "Mon, 12 Feb 2024 02:29:39 GMT",
+    "Content-Type": "application/json",
+    "Content-Length": "6287",
+    "Connection": "keep-alive",
+    "x-amzn-RequestId": "fd00e6a3-42f7-46e0-8cfc-20b2a5bda7bd",
+    "x-amzn-ErrorType": "IncompleteSignatureException",
+    "x-amz-apigw-id": "TAFXIFJ9DoEEcXg="
+}
