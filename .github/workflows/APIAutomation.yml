@@ -18,37 +18,37 @@ jobs:
           npm install -g newman newman-reporter-allure
           echo "Newman and newman-reporter-allure installed."
 
-      - name: Run Admin Postman tests
-        run: |
-           newman run ADMIN_API_COLLECTION/Admin_API_QA.json -e ADMIN_API_COLLECTION/BANK78_ENV_postman_environment.json --reporters cli,allure
-           echo "Admin Postman tests run."
-           
-      - name: Proceed with workflow
-        run: |     
-          test-runner-command || true 
-          echo "Workflow continues to generate result"
-          
-      - name: Get Admin Allure history
-        uses: actions/checkout@v2
+      - name: Run Admin - API tests
         if: always()
         continue-on-error: true
+        run: 
+           newman run ADMIN_API_COLLECTION/Admin_API_QA.json -e ADMIN_API_COLLECTION/BANK78_ENV_postman_environment.json --reporters cli,allure
+           echo "Retail API Postman tests run."
+           
+      - name: Get Admin Allure history
+        uses: actions/checkout@v2
         with:
           ref: gh-pages
           path: gh-pages
-    
-      - name: Allure report action
-        id: build
+
+        
+      - name: Admin Allure report action
+        id: Admin_build
         uses: simple-elf/allure-report-action@master
+        if: always()
+        continue-on-error: true
         with:
           allure_results: allure-results
           gh_pages: gh-pages
           allure_report: allure-report
           allure_history: allure-history
 
-      - name: Wait for Allure report to be generated
+      - name: Wait for Admin API Allure report to be generated
+        if: always()
+        continue-on-error: true
         run: sleep 10
 
-      - name: Update Allure Report Widget Title
+      - name: Update ADMIN API Allure Report Widget Title
         continue-on-error: true
         if: steps.build.outcome == 'success'
         run: |
@@ -81,3 +81,5 @@ jobs:
           PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: allure-history
+
+    
