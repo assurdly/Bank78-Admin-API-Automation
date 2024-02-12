@@ -28,7 +28,7 @@ jobs:
           test-runner-command || true 
           echo "Workflow continues to generate result"
           
-      - name: Get Allure history
+      - name: Get Admin Allure history
         uses: actions/checkout@v2
         if: always()
         continue-on-error: true
