@@ -1,0 +1,8 @@
+{
+  "emailAddress": "Ruthie@dispostable.com",
+  "firstName": "{$randomFirstName}}",
+  "lastName": "{$randomLastName}}",
+  "phoneNumber": "07011725297",
+  "roleId": "2",
+  "isSuperAdmin": "false"
+}
