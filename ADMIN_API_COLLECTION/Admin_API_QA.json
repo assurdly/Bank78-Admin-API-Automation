@@ -9648,10 +9648,6 @@
 													"        pm.expect(customer).to.have.property('postalCode');",
 													"        pm.expect(customer).to.have.property('profileImage');",
 													"        pm.expect(customer).to.have.property('gender');",
-													"        pm.expect(customer).to.have.property('securityQuestion1');",
-													"        pm.expect(customer).to.have.property('securityAnswer1');",
-													"        pm.expect(customer).to.have.property('securityQuestion2');",
-													"        pm.expect(customer).to.have.property('securityAnswer2');",
 													"        pm.expect(customer).to.have.property('phoneNumberVerifiedAt');",
 													"        pm.expect(customer).to.have.property('emailVeriedAt');",
 													"        pm.expect(customer).to.have.property('income');",
@@ -9676,6 +9672,14 @@
 													"    });",
 													"});"
 												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "3241f89d-46be-4069-a858-46a264bb91b2",
+												"exec": [],
 												"type": "text/javascript"
 											}
 										}
