@@ -1,0 +1,11 @@
+{
+    "Content-Type": "application/json",
+    "Accept": "text/plain",
+    "User-Agent": "PostmanRuntime/7.36.3",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "b3f997d5-9ef9-4f90-bf97-d917efe23e3e",
+    "Host": "sandbox.bank78.co",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "360"
+}

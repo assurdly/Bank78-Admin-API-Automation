@@ -1,0 +1,12 @@
+{
+    "Content-Type": "application/json",
+    "Accept": "text/plain",
+    "x-api-key": "h9tRbOJzcH9O8mDsWRVey6OimYrqYUdg4c4IKNTf",
+    "User-Agent": "PostmanRuntime/7.36.3",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "db8a89fb-bfde-45d2-ae3c-58f5b406d58e",
+    "Host": "onboard-dev.bank78.co",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "123"
+}
