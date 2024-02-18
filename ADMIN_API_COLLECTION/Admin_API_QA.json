@@ -15078,7 +15078,7 @@
 													"\r",
 													"pm.test(\"Response is an object with properties\", function () {\r",
 													"    var jsonData = pm.response.json();\r",
-													"    pm.expect(jsonData).to.be.an('object').that.has.all.keys('hasResult', 'result', 'resultType', 'message', 'validationMessages', 'successful');\r",
+													"    pm.expect(jsonData).to.be.an('object').that.has.all.keys('hasResult', 'result', 'resultType', 'message', 'validationMessages', 'successful','errorCode', 'responseCode');\r",
 													"});\r",
 													"\r",
 													"pm.test(\"hasResult property is a boolean\", function () {\r",
@@ -15111,6 +15111,14 @@
 													"    pm.expect(jsonData.successful).to.be.a('boolean');\r",
 													"});"
 												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "3604f15c-61f8-4790-b10c-5b1469beee49",
+												"exec": [],
 												"type": "text/javascript"
 											}
 										}
