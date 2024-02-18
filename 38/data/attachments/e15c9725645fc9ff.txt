@@ -1,0 +1,8 @@
+{
+  "emailAddress": "Alexandrea@dispostable.com",
+  "firstName": "Secoon",
+  "lastName": "New-Admin",
+  "phoneNumber": "09038281849",
+  "roleId": "2",
+  "isSuperAdmin": "false"
+}
