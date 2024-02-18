@@ -1,0 +1,9 @@
+{
+    "Date": "Sun, 18 Feb 2024 21:53:57 GMT",
+    "Content-Type": "application/json",
+    "Content-Length": "43",
+    "Connection": "keep-alive",
+    "x-amzn-RequestId": "c4a94dfa-c722-48e7-aeb2-b02fc9902f44",
+    "x-amzn-ErrorType": "MissingAuthenticationTokenException",
+    "x-amz-apigw-id": "TWhidE2MjoEEH4w="
+}

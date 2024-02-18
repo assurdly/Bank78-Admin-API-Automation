@@ -1,0 +1,1 @@
+{"hasResult":true,"result":{"totalSum":62663194.3200,"total":9476,"totalSuccessfulAmount":53891496.3200,"totalSuccessfulCount":3085,"totalFailedAmount":1244144.0000,"totalFailedCount":5808,"totalPendingAmount":7402379.0000,"totalPendingCount":546.0},"resultType":"Success","message":"Success","validationMessages":null,"successful":true}
