@@ -8802,7 +8802,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n\"username\": \"gloworld2@dispostable.com\"\n}",
+											"raw": "{\n\"username\": \"gloworld2@dispostable.com\",\n\"comment\": \"Testing\"\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -8897,16 +8897,16 @@
 													"    pm.expect(responseData.result).to.be.null;\r",
 													"});\r",
 													"\r",
-													"pm.test(\"ResultType is 'ValidationError'\", function() {\r",
+													"pm.test(\"ResultType is 'Error'\", function() {\r",
 													"    const responseData = pm.response.json();\r",
 													"    \r",
-													"    pm.expect(responseData.resultType).to.equal(\"ValidationError\");\r",
+													"    pm.expect(responseData.resultType).to.equal(\"Error\");\r",
 													"});\r",
 													"\r",
-													"pm.test(\"Message is 'Response has validation errors'\", function() {\r",
+													"pm.test(\"Message is 'Cannot find user with specified username'\", function() {\r",
 													"    const responseData = pm.response.json();\r",
 													"    \r",
-													"    pm.expect(responseData.message).to.equal(\"Response has validation errors\");\r",
+													"    pm.expect(responseData.message).to.equal(\"Cannot find user with specified username\");\r",
 													"});\r",
 													"\r",
 													"pm.test(\"Successful is false\", function() {\r",
@@ -8915,13 +8915,22 @@
 													"    pm.expect(responseData.successful).to.be.false;\r",
 													"});\r",
 													"\r",
-													"pm.test(\"ValidationMessages contains 'The username field is required.'\", function() {\r",
+													"pm.test(\"ValidationMessages contains null'\", function() {\r",
 													"    const responseData = pm.response.json();\r",
 													"    \r",
-													"    pm.expect(responseData.validationMessages).to.include(\"The username field is required.\");\r",
+													"    pm.expect(responseData.validationMessages).to.eql(null);\r",
 													"});\r",
 													""
 												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "d71bf70f-bd6c-4bb7-8a8e-a133720215cc",
+												"exec": [],
 												"type": "text/javascript"
 											}
 										}
@@ -8944,27 +8953,16 @@
 												"value": "text/plain"
 											}
 										],
-										"url": {
-											"raw": "https://onboard-dev.bank78.co/api/customer/status/toggle?username=",
-											"protocol": "https",
-											"host": [
-												"onboard-dev",
-												"bank78",
-												"co"
-											],
-											"path": [
-												"api",
-												"customer",
-												"status",
-												"toggle"
-											],
-											"query": [
-												{
-													"key": "username",
-													"value": ""
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\"username\": \"\",\n\"comment\": \"Testing\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
 												}
-											]
-										}
+											}
+										},
+										"url": "https://onboard-dev.bank78.co/api/customer/status/toggle"
 									},
 									"response": [
 										{
