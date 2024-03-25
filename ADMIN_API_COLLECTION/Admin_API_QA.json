@@ -6636,138 +6636,591 @@
 					"name": "Manage customer",
 					"item": [
 						{
-							"name": "kyc",
+							"name": "Customer Status (Active/Deactivated)",
 							"item": [
 								{
-									"name": "Level 1",
-									"item": [
+									"name": "Deactivate - Deactivate/Reactivate User",
+									"event": [
 										{
-											"name": "Level 1 Approved",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "e4dbf846-d320-4f56-8f1e-146496e612f0",
-														"exec": [
-															"pm.test(\"Response 'hasResult' is true\", function () {\r",
-															"    pm.expect(pm.response.json().hasResult).to.be.true;\r",
-															"});\r",
-															"\r",
-															"pm.test(\"Response 'resultType' is 'Success'\", function () {\r",
-															"    pm.expect(pm.response.json().resultType).to.equal(\"Success\");\r",
-															"});\r",
-															"\r",
-															"pm.test(\"Response 'message' is 'Success'\", function () {\r",
-															"    pm.expect(pm.response.json().message).to.equal(\"Success\");\r",
-															"});\r",
-															"\r",
-															"pm.test(\"Response 'successful' is true\", function () {\r",
-															"    pm.expect(pm.response.json().successful).to.be.true;\r",
-															"});\r",
-															"\r",
-															"// Optional: Verify the 'result' object (if needed)\r",
-															"pm.test(\"Response 'result' object contains 'message'\", function () {\r",
-															"    pm.expect(pm.response.json().result).to.have.property('message');\r",
-															"    pm.expect(pm.response.json().result.message).to.equal(\"Approval Successful\");\r",
-															"});\r",
-															"\r",
-															"// Optional: Verify 'validationMessages' (if needed)\r",
-															"pm.test(\"Response 'validationMessages' is null\", function () {\r",
-															"    pm.expect(pm.response.json().validationMessages).to.be.null;\r",
-															"});\r",
-															""
-														],
-														"type": "text/javascript"
-													}
+											"listen": "test",
+											"script": {
+												"id": "bead9b8c-fccb-4405-8bf0-24daeeda7fd8",
+												"exec": [
+													"pm.test(\"Message is 'Deactivated Successfully' or 'Activated Successfully'\", function() {\r",
+													"    const responseData = pm.response.json();\r",
+													"    const expectedMessages = [\"Deactivated Successfully\", \"Activated Successfully\"];\r",
+													"    \r",
+													"    pm.expect(expectedMessages).to.include(responseData.result.message);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response has a 'hasResult' property\", function() {\r",
+													"    pm.expect(pm.response.json()).to.have.property(\"hasResult\", true);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response has a 'resultType' property with value 'Success'\", function() {\r",
+													"    pm.expect(pm.response.json()).to.have.property(\"resultType\", \"Success\");\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response has a 'message' property with value 'Success'\", function() {\r",
+													"    pm.expect(pm.response.json()).to.have.property(\"message\", \"Success\");\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response has no 'validationMessages'\", function() {\r",
+													"    pm.expect(pm.response.json().validationMessages).to.be.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response has a 'successful' property with value 'true'\", function() {\r",
+													"    pm.expect(pm.response.json()).to.have.property(\"successful\", true);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "d1489a09-7e6a-4899-a9de-086581204e5f",
+												"exec": [],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"id": "7ea294ac-50f0-4130-a6f7-373263d38989",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": {
+												"token": "{{admin_access_token}}"
+											}
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\"username\": \"test2606@mailinator.com\",\n\"comment\": \"Testing\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
 												}
+											}
+										},
+										"url": {
+											"raw": "https://onboard-dev.bank78.co/api/customer/status/toggle?username=test2606@mailinator.com",
+											"protocol": "https",
+											"host": [
+												"onboard-dev",
+												"bank78",
+												"co"
 											],
-											"id": "37e86281-3ae5-4498-842b-9ab7d8ef923c",
-											"protocolProfileBehavior": {
-												"disableBodyPruning": true
-											},
-											"request": {
-												"auth": {
-													"type": "bearer",
-													"bearer": {
-														"token": "{{admin_access_token}}"
-													}
-												},
+											"path": [
+												"api",
+												"customer",
+												"status",
+												"toggle"
+											],
+											"query": [
+												{
+													"key": "username",
+													"value": "test2606@mailinator.com"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "cd39a066-c8bd-4e8d-b060-de53884fcdf7",
+											"name": "Success",
+											"originalRequest": {
 												"method": "POST",
 												"header": [
-													{
-														"key": "Content-Type",
-														"value": "application/json"
-													},
 													{
 														"key": "Accept",
 														"value": "text/plain"
 													},
 													{
-														"key": "x-api-key",
-														"value": "{{x-api-key}}",
-														"type": "text"
+														"description": "Added as a part of security scheme: apikey",
+														"key": "Authorization",
+														"value": "<API Key>"
 													}
 												],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n  \"userName\": \"damilola@assurdly.com\",\n  \"kycStatus\": \"Level1approved\",\n  \"kycApprovedBy\": \"superadmin@payaza.africa\"\n}",
-													"options": {
-														"raw": {
-															"headerFamily": "json",
-															"language": "json"
-														}
-													}
-												},
-												"url": "{{baseUrl}}/onboard/api/customer/kyc/approve"
-											},
-											"response": [
-												{
-													"id": "99cb6a5a-46af-4530-833b-9d7a8bbc0758",
-													"name": "Success",
-													"originalRequest": {
-														"method": "POST",
-														"header": [
-															{
-																"key": "Content-Type",
-																"value": "application/json"
-															},
-															{
-																"key": "Accept",
-																"value": "text/plain"
-															},
-															{
-																"description": "Added as a part of security scheme: apikey",
-																"key": "Authorization",
-																"value": "<API Key>"
-															}
-														],
-														"body": {
-															"mode": "raw",
-															"raw": "{\n  \"userName\": \"<string>\",\n  \"rcBnNumber\": \"<string>\",\n  \"kycStatus\": \"Level2Pending\",\n  \"kycApprovedBy\": \"<string>\"\n}",
-															"options": {
-																"raw": {
-																	"headerFamily": "json",
-																	"language": "json"
-																}
-															}
-														},
-														"url": "{{baseUrl}}/api/customer/kyc/approve"
-													},
-													"status": "OK",
-													"code": 200,
-													"_postman_previewlanguage": "json",
-													"header": [
-														{
-															"key": "Content-Type",
-															"value": "application/json"
-														}
+												"url": {
+													"raw": "{{baseUrl}}/api/customer/status/toggle?username=<string>",
+													"host": [
+														"{{baseUrl}}"
 													],
-													"cookie": [],
-													"responseTime": null,
-													"body": "{\n  \"hasResult\": \"<boolean>\",\n  \"result\": {\n    \"nullable\": true\n  },\n  \"resultType\": \"ValidationError\",\n  \"message\": \"<string>\",\n  \"validationMessages\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"successful\": \"<boolean>\"\n}"
+													"path": [
+														"api",
+														"customer",
+														"status",
+														"toggle"
+													],
+													"query": [
+														{
+															"key": "username",
+															"value": "<string>"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"responseTime": null,
+											"body": "{\n  \"hasResult\": \"<boolean>\",\n  \"result\": {\n    \"nullable\": true\n  },\n  \"resultType\": \"ValidationError\",\n  \"message\": \"<string>\",\n  \"validationMessages\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"successful\": \"<boolean>\"\n}"
+										}
+									]
+								},
+								{
+									"name": "Activate - Deactivate/Reactivate User",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "bead9b8c-fccb-4405-8bf0-24daeeda7fd8",
+												"exec": [
+													"pm.test(\"Message is 'Deactivated Successfully' or 'Activated Successfully'\", function() {\r",
+													"    const responseData = pm.response.json();\r",
+													"    const expectedMessages = [\"Deactivated Successfully\", \"Activated Successfully\"];\r",
+													"    \r",
+													"    pm.expect(expectedMessages).to.include(responseData.result.message);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response has a 'hasResult' property\", function() {\r",
+													"    pm.expect(pm.response.json()).to.have.property(\"hasResult\", true);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response has a 'resultType' property with value 'Success'\", function() {\r",
+													"    pm.expect(pm.response.json()).to.have.property(\"resultType\", \"Success\");\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response has a 'message' property with value 'Success'\", function() {\r",
+													"    pm.expect(pm.response.json()).to.have.property(\"message\", \"Success\");\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response has no 'validationMessages'\", function() {\r",
+													"    pm.expect(pm.response.json().validationMessages).to.be.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response has a 'successful' property with value 'true'\", function() {\r",
+													"    pm.expect(pm.response.json()).to.have.property(\"successful\", true);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "d1489a09-7e6a-4899-a9de-086581204e5f",
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "4d9b89ca-c04e-482a-8b17-b056b2e297be",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": {
+												"token": "{{admin_access_token}}"
+											}
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\"username\": \"test2606@mailinator.com\",\n\"comment\": \"Testing\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "https://onboard-dev.bank78.co/api/customer/status/toggle"
+									},
+									"response": [
+										{
+											"id": "6b595c34-3f04-4b6a-bffa-47394fe71d54",
+											"name": "Success",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													},
+													{
+														"description": "Added as a part of security scheme: apikey",
+														"key": "Authorization",
+														"value": "<API Key>"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/customer/status/toggle?username=<string>",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"customer",
+														"status",
+														"toggle"
+													],
+													"query": [
+														{
+															"key": "username",
+															"value": "<string>"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"responseTime": null,
+											"body": "{\n  \"hasResult\": \"<boolean>\",\n  \"result\": {\n    \"nullable\": true\n  },\n  \"resultType\": \"ValidationError\",\n  \"message\": \"<string>\",\n  \"validationMessages\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"successful\": \"<boolean>\"\n}"
+										}
+									]
+								},
+								{
+									"name": "Activate blacklisted Account",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "c2bfab6f-ca50-44b0-b31f-117b46b5ffcc",
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response has no result\", function() {\r",
+													"    const responseData = pm.response.json();\r",
+													"    \r",
+													"    pm.expect(responseData.hasResult).to.be.false;\r",
+													"    pm.expect(responseData.result).to.be.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"ResultType is 'Error'\", function() {\r",
+													"    const responseData = pm.response.json();\r",
+													"    \r",
+													"    pm.expect(responseData.resultType).to.equal(\"Error\");\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Message is 'This User has been blacklisted'\", function() {\r",
+													"    const responseData = pm.response.json();\r",
+													"    \r",
+													"    pm.expect(responseData.message).to.equal(\"This User has been blacklisted\");\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Successful is false\", function() {\r",
+													"    const responseData = pm.response.json();\r",
+													"    \r",
+													"    pm.expect(responseData.successful).to.be.false;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"ValidationMessages is null\", function() {\r",
+													"    const responseData = pm.response.json();\r",
+													"    \r",
+													"    pm.expect(responseData.validationMessages).to.be.null;\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "313731ab-1fc2-402a-a943-25c822212a72",
+												"exec": [],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"id": "be4622b6-62bb-404c-83d4-aae281b95589",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": {
+												"token": "{{admin_access_token}}"
+											}
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\"username\": \"gloworld2@dispostable.com\",\n\"comment\": \"Testing\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://onboard-dev.bank78.co/api/customer/status/toggle?username=gloworld2@dispostable.com",
+											"protocol": "https",
+											"host": [
+												"onboard-dev",
+												"bank78",
+												"co"
+											],
+											"path": [
+												"api",
+												"customer",
+												"status",
+												"toggle"
+											],
+											"query": [
+												{
+													"key": "username",
+													"value": "gloworld2@dispostable.com"
 												}
 											]
+										}
+									},
+									"response": [
+										{
+											"id": "7df7d053-efd6-483e-a48c-1fc0d44fd259",
+											"name": "Success",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													},
+													{
+														"description": "Added as a part of security scheme: apikey",
+														"key": "Authorization",
+														"value": "<API Key>"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/customer/status/toggle?username=<string>",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"customer",
+														"status",
+														"toggle"
+													],
+													"query": [
+														{
+															"key": "username",
+															"value": "<string>"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"responseTime": null,
+											"body": "{\n  \"hasResult\": \"<boolean>\",\n  \"result\": {\n    \"nullable\": true\n  },\n  \"resultType\": \"ValidationError\",\n  \"message\": \"<string>\",\n  \"validationMessages\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"successful\": \"<boolean>\"\n}"
+										}
+									]
+								},
+								{
+									"name": "username required",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "f3c83af8-cf40-43b2-a4c6-d9d864739afd",
+												"exec": [
+													"pm.test(\"Response has no result\", function() {\r",
+													"    const responseData = pm.response.json();\r",
+													"    \r",
+													"    pm.expect(responseData.hasResult).to.be.false;\r",
+													"    pm.expect(responseData.result).to.be.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"ResultType is 'Error'\", function() {\r",
+													"    const responseData = pm.response.json();\r",
+													"    \r",
+													"    pm.expect(responseData.resultType).to.equal(\"Error\");\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Message is 'Cannot find user with specified username'\", function() {\r",
+													"    const responseData = pm.response.json();\r",
+													"    \r",
+													"    pm.expect(responseData.message).to.equal(\"Cannot find user with specified username\");\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Successful is false\", function() {\r",
+													"    const responseData = pm.response.json();\r",
+													"    \r",
+													"    pm.expect(responseData.successful).to.be.false;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"ValidationMessages contains null'\", function() {\r",
+													"    const responseData = pm.response.json();\r",
+													"    \r",
+													"    pm.expect(responseData.validationMessages).to.eql(null);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
 										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "9989ebf1-7deb-49b5-88c3-7589eb942a48",
+												"exec": [
+													"postman.setNextRequest(\"Update Customer limit\")"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "863f5b29-a5fe-4317-bfa2-2d7becc95860",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": {
+												"token": "{{admin_access_token}}"
+											}
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\"username\": \"\",\n\"comment\": \"Testing\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "https://onboard-dev.bank78.co/api/customer/status/toggle"
+									},
+									"response": [
+										{
+											"id": "f2bc9860-2d07-4af3-913c-f799a42a34be",
+											"name": "Success",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													},
+													{
+														"description": "Added as a part of security scheme: apikey",
+														"key": "Authorization",
+														"value": "<API Key>"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/customer/status/toggle?username=<string>",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"customer",
+														"status",
+														"toggle"
+													],
+													"query": [
+														{
+															"key": "username",
+															"value": "<string>"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"responseTime": null,
+											"body": "{\n  \"hasResult\": \"<boolean>\",\n  \"result\": {\n    \"nullable\": true\n  },\n  \"resultType\": \"ValidationError\",\n  \"message\": \"<string>\",\n  \"validationMessages\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"successful\": \"<boolean>\"\n}"
+										}
+									]
+								}
+							],
+							"id": "1b3a78af-815d-46a8-8579-fefbd5246618"
+						},
+						{
+							"name": "kyc",
+							"item": [
+								{
+									"name": "Level 1",
+									"item": [
 										{
 											"name": "Level 1 Approved without username",
 											"event": [
@@ -7106,6 +7559,133 @@
 											"response": [
 												{
 													"id": "95fc2f57-03eb-4bd9-beb7-4deee1b8753b",
+													"name": "Success",
+													"originalRequest": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json"
+															},
+															{
+																"key": "Accept",
+																"value": "text/plain"
+															},
+															{
+																"description": "Added as a part of security scheme: apikey",
+																"key": "Authorization",
+																"value": "<API Key>"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n  \"userName\": \"<string>\",\n  \"rcBnNumber\": \"<string>\",\n  \"kycStatus\": \"Level2Pending\",\n  \"kycApprovedBy\": \"<string>\"\n}",
+															"options": {
+																"raw": {
+																	"headerFamily": "json",
+																	"language": "json"
+																}
+															}
+														},
+														"url": "{{baseUrl}}/api/customer/kyc/approve"
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json"
+														}
+													],
+													"cookie": [],
+													"responseTime": null,
+													"body": "{\n  \"hasResult\": \"<boolean>\",\n  \"result\": {\n    \"nullable\": true\n  },\n  \"resultType\": \"ValidationError\",\n  \"message\": \"<string>\",\n  \"validationMessages\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"successful\": \"<boolean>\"\n}"
+												}
+											]
+										},
+										{
+											"name": "Level 1 Approved",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "e4dbf846-d320-4f56-8f1e-146496e612f0",
+														"exec": [
+															"pm.test(\"Response 'hasResult' is true\", function () {\r",
+															"    pm.expect(pm.response.json().hasResult).to.be.true;\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Response 'resultType' is 'Success'\", function () {\r",
+															"    pm.expect(pm.response.json().resultType).to.equal(\"Success\");\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Response 'message' is 'Success'\", function () {\r",
+															"    pm.expect(pm.response.json().message).to.equal(\"Success\");\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Response 'successful' is true\", function () {\r",
+															"    pm.expect(pm.response.json().successful).to.be.true;\r",
+															"});\r",
+															"\r",
+															"// Optional: Verify the 'result' object (if needed)\r",
+															"pm.test(\"Response 'result' object contains 'message'\", function () {\r",
+															"    pm.expect(pm.response.json().result).to.have.property('message');\r",
+															"    pm.expect(pm.response.json().result.message).to.equal(\"Approval Successful\");\r",
+															"});\r",
+															"\r",
+															"// Optional: Verify 'validationMessages' (if needed)\r",
+															"pm.test(\"Response 'validationMessages' is null\", function () {\r",
+															"    pm.expect(pm.response.json().validationMessages).to.be.null;\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"id": "37e86281-3ae5-4498-842b-9ab7d8ef923c",
+											"protocolProfileBehavior": {
+												"disableBodyPruning": true
+											},
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": {
+														"token": "{{admin_access_token}}"
+													}
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													},
+													{
+														"key": "x-api-key",
+														"value": "{{x-api-key}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"userName\": \"damilola@assurdly.com\",\n  \"kycStatus\": \"Level1approved\",\n  \"kycApprovedBy\": \"superadmin@payaza.africa\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": "{{baseUrl}}/onboard/api/customer/kyc/approve"
+											},
+											"response": [
+												{
+													"id": "99cb6a5a-46af-4530-833b-9d7a8bbc0758",
 													"name": "Success",
 													"originalRequest": {
 														"method": "POST",
@@ -8440,583 +9020,6 @@
 								}
 							],
 							"id": "b2d35b31-ad77-4b77-86dd-f90862f36c75"
-						},
-						{
-							"name": "Customer Status (Active/Deactivated)",
-							"item": [
-								{
-									"name": "Deactivate - Deactivate/Reactivate User",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "bead9b8c-fccb-4405-8bf0-24daeeda7fd8",
-												"exec": [
-													"pm.test(\"Message is 'Deactivated Successfully' or 'Activated Successfully'\", function() {\r",
-													"    const responseData = pm.response.json();\r",
-													"    const expectedMessages = [\"Deactivated Successfully\", \"Activated Successfully\"];\r",
-													"    \r",
-													"    pm.expect(expectedMessages).to.include(responseData.result.message);\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Response has a 'hasResult' property\", function() {\r",
-													"    pm.expect(pm.response.json()).to.have.property(\"hasResult\", true);\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Response has a 'resultType' property with value 'Success'\", function() {\r",
-													"    pm.expect(pm.response.json()).to.have.property(\"resultType\", \"Success\");\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Response has a 'message' property with value 'Success'\", function() {\r",
-													"    pm.expect(pm.response.json()).to.have.property(\"message\", \"Success\");\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Response has no 'validationMessages'\", function() {\r",
-													"    pm.expect(pm.response.json().validationMessages).to.be.null;\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Response has a 'successful' property with value 'true'\", function() {\r",
-													"    pm.expect(pm.response.json()).to.have.property(\"successful\", true);\r",
-													"});\r",
-													""
-												],
-												"type": "text/javascript",
-												"packages": {}
-											}
-										},
-										{
-											"listen": "prerequest",
-											"script": {
-												"id": "d1489a09-7e6a-4899-a9de-086581204e5f",
-												"exec": [],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"id": "7ea294ac-50f0-4130-a6f7-373263d38989",
-									"protocolProfileBehavior": {
-										"disableBodyPruning": true
-									},
-									"request": {
-										"auth": {
-											"type": "bearer",
-											"bearer": {
-												"token": "{{admin_access_token}}"
-											}
-										},
-										"method": "POST",
-										"header": [
-											{
-												"key": "Accept",
-												"value": "text/plain"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n\"username\": \"test2606@mailinator.com\",\n\"comment\": \"Testing\"\n}",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "https://onboard-dev.bank78.co/api/customer/status/toggle?username=test2606@mailinator.com",
-											"protocol": "https",
-											"host": [
-												"onboard-dev",
-												"bank78",
-												"co"
-											],
-											"path": [
-												"api",
-												"customer",
-												"status",
-												"toggle"
-											],
-											"query": [
-												{
-													"key": "username",
-													"value": "test2606@mailinator.com"
-												}
-											]
-										}
-									},
-									"response": [
-										{
-											"id": "cd39a066-c8bd-4e8d-b060-de53884fcdf7",
-											"name": "Success",
-											"originalRequest": {
-												"method": "POST",
-												"header": [
-													{
-														"key": "Accept",
-														"value": "text/plain"
-													},
-													{
-														"description": "Added as a part of security scheme: apikey",
-														"key": "Authorization",
-														"value": "<API Key>"
-													}
-												],
-												"url": {
-													"raw": "{{baseUrl}}/api/customer/status/toggle?username=<string>",
-													"host": [
-														"{{baseUrl}}"
-													],
-													"path": [
-														"api",
-														"customer",
-														"status",
-														"toggle"
-													],
-													"query": [
-														{
-															"key": "username",
-															"value": "<string>"
-														}
-													]
-												}
-											},
-											"status": "OK",
-											"code": 200,
-											"_postman_previewlanguage": "json",
-											"header": [
-												{
-													"key": "Content-Type",
-													"value": "application/json"
-												}
-											],
-											"cookie": [],
-											"responseTime": null,
-											"body": "{\n  \"hasResult\": \"<boolean>\",\n  \"result\": {\n    \"nullable\": true\n  },\n  \"resultType\": \"ValidationError\",\n  \"message\": \"<string>\",\n  \"validationMessages\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"successful\": \"<boolean>\"\n}"
-										}
-									]
-								},
-								{
-									"name": "Activate - Deactivate/Reactivate User",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "bead9b8c-fccb-4405-8bf0-24daeeda7fd8",
-												"exec": [
-													"pm.test(\"Message is 'Deactivated Successfully' or 'Activated Successfully'\", function() {\r",
-													"    const responseData = pm.response.json();\r",
-													"    const expectedMessages = [\"Deactivated Successfully\", \"Activated Successfully\"];\r",
-													"    \r",
-													"    pm.expect(expectedMessages).to.include(responseData.result.message);\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Response has a 'hasResult' property\", function() {\r",
-													"    pm.expect(pm.response.json()).to.have.property(\"hasResult\", true);\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Response has a 'resultType' property with value 'Success'\", function() {\r",
-													"    pm.expect(pm.response.json()).to.have.property(\"resultType\", \"Success\");\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Response has a 'message' property with value 'Success'\", function() {\r",
-													"    pm.expect(pm.response.json()).to.have.property(\"message\", \"Success\");\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Response has no 'validationMessages'\", function() {\r",
-													"    pm.expect(pm.response.json().validationMessages).to.be.null;\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Response has a 'successful' property with value 'true'\", function() {\r",
-													"    pm.expect(pm.response.json()).to.have.property(\"successful\", true);\r",
-													"});\r",
-													""
-												],
-												"type": "text/javascript",
-												"packages": {}
-											}
-										},
-										{
-											"listen": "prerequest",
-											"script": {
-												"id": "d1489a09-7e6a-4899-a9de-086581204e5f",
-												"exec": [
-													""
-												],
-												"type": "text/javascript",
-												"packages": {}
-											}
-										}
-									],
-									"id": "4d9b89ca-c04e-482a-8b17-b056b2e297be",
-									"protocolProfileBehavior": {
-										"disableBodyPruning": true
-									},
-									"request": {
-										"auth": {
-											"type": "bearer",
-											"bearer": {
-												"token": "{{admin_access_token}}"
-											}
-										},
-										"method": "POST",
-										"header": [
-											{
-												"key": "Accept",
-												"value": "text/plain"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n\"username\": \"test2606@mailinator.com\",\n\"comment\": \"Testing\"\n}",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": "https://onboard-dev.bank78.co/api/customer/status/toggle"
-									},
-									"response": [
-										{
-											"id": "6b595c34-3f04-4b6a-bffa-47394fe71d54",
-											"name": "Success",
-											"originalRequest": {
-												"method": "POST",
-												"header": [
-													{
-														"key": "Accept",
-														"value": "text/plain"
-													},
-													{
-														"description": "Added as a part of security scheme: apikey",
-														"key": "Authorization",
-														"value": "<API Key>"
-													}
-												],
-												"url": {
-													"raw": "{{baseUrl}}/api/customer/status/toggle?username=<string>",
-													"host": [
-														"{{baseUrl}}"
-													],
-													"path": [
-														"api",
-														"customer",
-														"status",
-														"toggle"
-													],
-													"query": [
-														{
-															"key": "username",
-															"value": "<string>"
-														}
-													]
-												}
-											},
-											"status": "OK",
-											"code": 200,
-											"_postman_previewlanguage": "json",
-											"header": [
-												{
-													"key": "Content-Type",
-													"value": "application/json"
-												}
-											],
-											"cookie": [],
-											"responseTime": null,
-											"body": "{\n  \"hasResult\": \"<boolean>\",\n  \"result\": {\n    \"nullable\": true\n  },\n  \"resultType\": \"ValidationError\",\n  \"message\": \"<string>\",\n  \"validationMessages\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"successful\": \"<boolean>\"\n}"
-										}
-									]
-								},
-								{
-									"name": "Activate blacklisted Account",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "c2bfab6f-ca50-44b0-b31f-117b46b5ffcc",
-												"exec": [
-													"pm.test(\"Status code is 400\", function () {\r",
-													"    pm.response.to.have.status(400);\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Response has no result\", function() {\r",
-													"    const responseData = pm.response.json();\r",
-													"    \r",
-													"    pm.expect(responseData.hasResult).to.be.false;\r",
-													"    pm.expect(responseData.result).to.be.null;\r",
-													"});\r",
-													"\r",
-													"pm.test(\"ResultType is 'Error'\", function() {\r",
-													"    const responseData = pm.response.json();\r",
-													"    \r",
-													"    pm.expect(responseData.resultType).to.equal(\"Error\");\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Message is 'This User has been blacklisted'\", function() {\r",
-													"    const responseData = pm.response.json();\r",
-													"    \r",
-													"    pm.expect(responseData.message).to.equal(\"This User has been blacklisted\");\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Successful is false\", function() {\r",
-													"    const responseData = pm.response.json();\r",
-													"    \r",
-													"    pm.expect(responseData.successful).to.be.false;\r",
-													"});\r",
-													"\r",
-													"pm.test(\"ValidationMessages is null\", function() {\r",
-													"    const responseData = pm.response.json();\r",
-													"    \r",
-													"    pm.expect(responseData.validationMessages).to.be.null;\r",
-													"});\r",
-													""
-												],
-												"type": "text/javascript",
-												"packages": {}
-											}
-										},
-										{
-											"listen": "prerequest",
-											"script": {
-												"id": "313731ab-1fc2-402a-a943-25c822212a72",
-												"exec": [],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"id": "be4622b6-62bb-404c-83d4-aae281b95589",
-									"protocolProfileBehavior": {
-										"disableBodyPruning": true
-									},
-									"request": {
-										"auth": {
-											"type": "bearer",
-											"bearer": {
-												"token": "{{admin_access_token}}"
-											}
-										},
-										"method": "POST",
-										"header": [
-											{
-												"key": "Accept",
-												"value": "text/plain"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n\"username\": \"gloworld2@dispostable.com\",\n\"comment\": \"Testing\"\n}",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "https://onboard-dev.bank78.co/api/customer/status/toggle?username=gloworld2@dispostable.com",
-											"protocol": "https",
-											"host": [
-												"onboard-dev",
-												"bank78",
-												"co"
-											],
-											"path": [
-												"api",
-												"customer",
-												"status",
-												"toggle"
-											],
-											"query": [
-												{
-													"key": "username",
-													"value": "gloworld2@dispostable.com"
-												}
-											]
-										}
-									},
-									"response": [
-										{
-											"id": "7df7d053-efd6-483e-a48c-1fc0d44fd259",
-											"name": "Success",
-											"originalRequest": {
-												"method": "POST",
-												"header": [
-													{
-														"key": "Accept",
-														"value": "text/plain"
-													},
-													{
-														"description": "Added as a part of security scheme: apikey",
-														"key": "Authorization",
-														"value": "<API Key>"
-													}
-												],
-												"url": {
-													"raw": "{{baseUrl}}/api/customer/status/toggle?username=<string>",
-													"host": [
-														"{{baseUrl}}"
-													],
-													"path": [
-														"api",
-														"customer",
-														"status",
-														"toggle"
-													],
-													"query": [
-														{
-															"key": "username",
-															"value": "<string>"
-														}
-													]
-												}
-											},
-											"status": "OK",
-											"code": 200,
-											"_postman_previewlanguage": "json",
-											"header": [
-												{
-													"key": "Content-Type",
-													"value": "application/json"
-												}
-											],
-											"cookie": [],
-											"responseTime": null,
-											"body": "{\n  \"hasResult\": \"<boolean>\",\n  \"result\": {\n    \"nullable\": true\n  },\n  \"resultType\": \"ValidationError\",\n  \"message\": \"<string>\",\n  \"validationMessages\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"successful\": \"<boolean>\"\n}"
-										}
-									]
-								},
-								{
-									"name": "username required",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "f3c83af8-cf40-43b2-a4c6-d9d864739afd",
-												"exec": [
-													"pm.test(\"Response has no result\", function() {\r",
-													"    const responseData = pm.response.json();\r",
-													"    \r",
-													"    pm.expect(responseData.hasResult).to.be.false;\r",
-													"    pm.expect(responseData.result).to.be.null;\r",
-													"});\r",
-													"\r",
-													"pm.test(\"ResultType is 'Error'\", function() {\r",
-													"    const responseData = pm.response.json();\r",
-													"    \r",
-													"    pm.expect(responseData.resultType).to.equal(\"Error\");\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Message is 'Cannot find user with specified username'\", function() {\r",
-													"    const responseData = pm.response.json();\r",
-													"    \r",
-													"    pm.expect(responseData.message).to.equal(\"Cannot find user with specified username\");\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Successful is false\", function() {\r",
-													"    const responseData = pm.response.json();\r",
-													"    \r",
-													"    pm.expect(responseData.successful).to.be.false;\r",
-													"});\r",
-													"\r",
-													"pm.test(\"ValidationMessages contains null'\", function() {\r",
-													"    const responseData = pm.response.json();\r",
-													"    \r",
-													"    pm.expect(responseData.validationMessages).to.eql(null);\r",
-													"});\r",
-													""
-												],
-												"type": "text/javascript",
-												"packages": {}
-											}
-										},
-										{
-											"listen": "prerequest",
-											"script": {
-												"id": "d71bf70f-bd6c-4bb7-8a8e-a133720215cc",
-												"exec": [],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"id": "863f5b29-a5fe-4317-bfa2-2d7becc95860",
-									"protocolProfileBehavior": {
-										"disableBodyPruning": true
-									},
-									"request": {
-										"auth": {
-											"type": "bearer",
-											"bearer": {
-												"token": "{{admin_access_token}}"
-											}
-										},
-										"method": "POST",
-										"header": [
-											{
-												"key": "Accept",
-												"value": "text/plain"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n\"username\": \"\",\n\"comment\": \"Testing\"\n}",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": "https://onboard-dev.bank78.co/api/customer/status/toggle"
-									},
-									"response": [
-										{
-											"id": "f2bc9860-2d07-4af3-913c-f799a42a34be",
-											"name": "Success",
-											"originalRequest": {
-												"method": "POST",
-												"header": [
-													{
-														"key": "Accept",
-														"value": "text/plain"
-													},
-													{
-														"description": "Added as a part of security scheme: apikey",
-														"key": "Authorization",
-														"value": "<API Key>"
-													}
-												],
-												"url": {
-													"raw": "{{baseUrl}}/api/customer/status/toggle?username=<string>",
-													"host": [
-														"{{baseUrl}}"
-													],
-													"path": [
-														"api",
-														"customer",
-														"status",
-														"toggle"
-													],
-													"query": [
-														{
-															"key": "username",
-															"value": "<string>"
-														}
-													]
-												}
-											},
-											"status": "OK",
-											"code": 200,
-											"_postman_previewlanguage": "json",
-											"header": [
-												{
-													"key": "Content-Type",
-													"value": "application/json"
-												}
-											],
-											"cookie": [],
-											"responseTime": null,
-											"body": "{\n  \"hasResult\": \"<boolean>\",\n  \"result\": {\n    \"nullable\": true\n  },\n  \"resultType\": \"ValidationError\",\n  \"message\": \"<string>\",\n  \"validationMessages\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"successful\": \"<boolean>\"\n}"
-										}
-									]
-								}
-							],
-							"id": "1b3a78af-815d-46a8-8579-fefbd5246618"
 						},
 						{
 							"name": "Update Customer limit",
