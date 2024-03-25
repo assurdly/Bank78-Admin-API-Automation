@@ -9003,32 +9003,46 @@
 											"script": {
 												"id": "7fcc92c7-c453-4c76-908c-802a2ab45e76",
 												"exec": [
-													"pm.test(\"Response 'hasResult' is false\", function () {\r",
-													"    pm.expect(pm.response.json().hasResult).to.be.false;\r",
+													"var jsonData = pm.response.json()\r",
+													"\r",
+													"pm.test(\"Response 'hasResult' is true\", function () {\r",
+													"    pm.expect(jsonData.hasResult).to.be.true;\r",
 													"});\r",
 													"\r",
 													"pm.test(\"Response 'result' is null\", function () {\r",
-													"    pm.expect(pm.response.json().result).to.be.null;\r",
+													"    pm.expect(jsonData.result.message).to.eql(\"Account status updated successfully\");\r",
 													"});\r",
 													"\r",
-													"pm.test(\"Response 'resultType' is a string and equals 'Error'\", function () {\r",
-													"    pm.expect(pm.response.json().resultType).to.be.a('string').and.to.equal('Error');\r",
+													"pm.test(\"Response 'resultType' to eql 1'\", function () {\r",
+													"    pm.expect(jsonData.resultType).to.equal(1);\r",
 													"});\r",
 													"\r",
-													"pm.test(\"Response 'message' is a string and equals 'Please provide rejection message'\", function () {\r",
-													"    pm.expect(pm.response.json().message).to.be.a('string').and.to.equal('Please provide rejection message');\r",
+													"pm.test(\"Response 'message' is a string and equals 'Account status updated successfully'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.be.a('string').and.to.equal('Success');\r",
 													"});\r",
 													"\r",
 													"pm.test(\"Response 'validationMessages' is null\", function () {\r",
 													"    pm.expect(pm.response.json().validationMessages).to.be.null;\r",
 													"});\r",
 													"\r",
-													"pm.test(\"Response 'successful' is false\", function () {\r",
-													"    pm.expect(pm.response.json().successful).to.be.false;\r",
+													"pm.test(\"Response 'successful' is true\", function () {\r",
+													"    pm.expect(pm.response.json().successful).to.be.true;\r",
 													"});\r",
 													""
 												],
-												"type": "text/javascript"
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "47dc52a8-e142-4b29-a336-be91691c9103",
+												"exec": [
+													"postman.setNextRequest(\"View All customers\")"
+												],
+												"type": "text/javascript",
+												"packages": {}
 											}
 										}
 									],
@@ -9121,6 +9135,52 @@
 								},
 								{
 									"name": "Blacklist account",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "f2cc7bdc-d01e-492d-908a-4657e82d1ab3",
+												"exec": [
+													"var jsonData = pm.response.json()",
+													"",
+													"pm.test(\"Response 'hasResult' is true\", function () {",
+													"    pm.expect(jsonData.hasResult).to.be.true;",
+													"});",
+													"",
+													"pm.test(\"Response 'result' is null\", function () {",
+													"    pm.expect(jsonData.result.message).to.eql(\"Account status updated successfully\");",
+													"});",
+													"",
+													"pm.test(\"Response 'resultType' to eql 1'\", function () {",
+													"    pm.expect(jsonData.resultType).to.equal(1);",
+													"});",
+													"",
+													"pm.test(\"Response 'message' is a string and equals 'Account status updated successfully'\", function () {",
+													"    pm.expect(pm.response.json().message).to.be.a('string').and.to.equal('Success');",
+													"});",
+													"",
+													"pm.test(\"Response 'validationMessages' is null\", function () {",
+													"    pm.expect(pm.response.json().validationMessages).to.be.null;",
+													"});",
+													"",
+													"pm.test(\"Response 'successful' is true\", function () {",
+													"    pm.expect(pm.response.json().successful).to.be.true;",
+													"});",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "4d0fdef9-287b-4711-b0c3-3fe5c238f325",
+												"exec": [],
+												"type": "text/javascript"
+											}
+										}
+									],
 									"id": "586db273-09ce-4620-a840-38b948bac7cf",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
@@ -9156,12 +9216,6 @@
 												"blacklist"
 											],
 											"query": [
-												{
-													"key": "",
-													"value": "",
-													"type": "text",
-													"disabled": true
-												},
 												{
 													"key": "username",
 													"value": "tofutea5@mailinator.com"
@@ -9259,6 +9313,15 @@
 													"});\r",
 													""
 												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "0711a495-2e53-4b21-b452-00569f6b3881",
+												"exec": [],
 												"type": "text/javascript"
 											}
 										}
@@ -9523,6 +9586,15 @@
 													"",
 													""
 												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "07f1ed7d-18d2-4091-8a3d-6920ce8d5570",
+												"exec": [],
 												"type": "text/javascript"
 											}
 										}
@@ -9532,6 +9604,12 @@
 										"disableBodyPruning": true
 									},
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": {
+												"token": "{{admin_access_token}}"
+											}
+										},
 										"method": "GET",
 										"header": [
 											{
@@ -9775,6 +9853,12 @@
 										"disableBodyPruning": true
 									},
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": {
+												"token": "{{admin_access_token}}"
+											}
+										},
 										"method": "POST",
 										"header": [],
 										"url": "{{baseUrl}}/api/customer/export"
