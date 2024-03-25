@@ -8445,7 +8445,7 @@
 							"name": "Customer Status (Active/Deactivated)",
 							"item": [
 								{
-									"name": "Deactivate/Reactivate User",
+									"name": "Deactivate - Deactivate/Reactivate User",
 									"event": [
 										{
 											"listen": "test",
@@ -8480,6 +8480,15 @@
 													"});\r",
 													""
 												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "d1489a09-7e6a-4899-a9de-086581204e5f",
+												"exec": [],
 												"type": "text/javascript"
 											}
 										}
@@ -8502,6 +8511,15 @@
 												"value": "text/plain"
 											}
 										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\"username\": \"test2606@mailinator.com\",\n\"comment\": \"Testing\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
 										"url": {
 											"raw": "https://onboard-dev.bank78.co/api/customer/status/toggle?username=test2606@mailinator.com",
 											"protocol": "https",
@@ -8527,6 +8545,138 @@
 									"response": [
 										{
 											"id": "cd39a066-c8bd-4e8d-b060-de53884fcdf7",
+											"name": "Success",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													},
+													{
+														"description": "Added as a part of security scheme: apikey",
+														"key": "Authorization",
+														"value": "<API Key>"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/customer/status/toggle?username=<string>",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"customer",
+														"status",
+														"toggle"
+													],
+													"query": [
+														{
+															"key": "username",
+															"value": "<string>"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"responseTime": null,
+											"body": "{\n  \"hasResult\": \"<boolean>\",\n  \"result\": {\n    \"nullable\": true\n  },\n  \"resultType\": \"ValidationError\",\n  \"message\": \"<string>\",\n  \"validationMessages\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"successful\": \"<boolean>\"\n}"
+										}
+									]
+								},
+								{
+									"name": "Activate - Deactivate/Reactivate User",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "bead9b8c-fccb-4405-8bf0-24daeeda7fd8",
+												"exec": [
+													"pm.test(\"Message is 'Deactivated Successfully' or 'Activated Successfully'\", function() {\r",
+													"    const responseData = pm.response.json();\r",
+													"    const expectedMessages = [\"Deactivated Successfully\", \"Activated Successfully\"];\r",
+													"    \r",
+													"    pm.expect(expectedMessages).to.include(responseData.result.message);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response has a 'hasResult' property\", function() {\r",
+													"    pm.expect(pm.response.json()).to.have.property(\"hasResult\", true);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response has a 'resultType' property with value 'Success'\", function() {\r",
+													"    pm.expect(pm.response.json()).to.have.property(\"resultType\", \"Success\");\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response has a 'message' property with value 'Success'\", function() {\r",
+													"    pm.expect(pm.response.json()).to.have.property(\"message\", \"Success\");\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response has no 'validationMessages'\", function() {\r",
+													"    pm.expect(pm.response.json().validationMessages).to.be.null;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response has a 'successful' property with value 'true'\", function() {\r",
+													"    pm.expect(pm.response.json()).to.have.property(\"successful\", true);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "d1489a09-7e6a-4899-a9de-086581204e5f",
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "4d9b89ca-c04e-482a-8b17-b056b2e297be",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": {
+												"token": "{{admin_access_token}}"
+											}
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\"username\": \"test2606@mailinator.com\",\n\"comment\": \"Testing\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "https://onboard-dev.bank78.co/api/customer/status/toggle"
+									},
+									"response": [
+										{
+											"id": "6b595c34-3f04-4b6a-bffa-47394fe71d54",
 											"name": "Success",
 											"originalRequest": {
 												"method": "POST",
@@ -8619,6 +8769,15 @@
 													"});\r",
 													""
 												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "313731ab-1fc2-402a-a943-25c822212a72",
+												"exec": [],
 												"type": "text/javascript"
 											}
 										}
@@ -8641,6 +8800,15 @@
 												"value": "text/plain"
 											}
 										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\"username\": \"gloworld2@dispostable.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
 										"url": {
 											"raw": "https://onboard-dev.bank78.co/api/customer/status/toggle?username=gloworld2@dispostable.com",
 											"protocol": "https",
