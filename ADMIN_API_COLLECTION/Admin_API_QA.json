@@ -5539,6 +5539,15 @@
 													"    pm.expect(pm.response.json().successful).to.be.a('boolean');",
 													"});"
 												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "db3adf7a-eb1d-4340-abbf-52937097bb0d",
+												"exec": [],
 												"type": "text/javascript"
 											}
 										}
@@ -5561,6 +5570,15 @@
 												"value": "text/plain"
 											}
 										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"rcbnNumber\" : \"\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
 										"url": {
 											"raw": "https://onboard-dev.bank78.co/api/business/blacklist?rcbnNumber=dhdjdjbddksk",
 											"protocol": "https",
@@ -5662,7 +5680,7 @@
 													"    // Check if 'validationMessages' property is an array\r",
 													"    pm.expect(validationMessages).to.be.an('array');\r",
 													"    // Check if the array contains the expected error message\r",
-													"    pm.expect(validationMessages).to.eql(['The rcbnNumber field is required.']);\r",
+													"    pm.expect(validationMessages[1]).to.include('The RcNumber field is required.');\r",
 													"});\r",
 													"\r",
 													"pm.test(\"Verify response successful is false\", function () {\r",
@@ -5670,6 +5688,15 @@
 													"});\r",
 													""
 												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "69b85c1e-a09f-42a8-81c8-311b34136168",
+												"exec": [],
 												"type": "text/javascript"
 											}
 										}
@@ -5692,26 +5719,16 @@
 												"value": "text/plain"
 											}
 										],
-										"url": {
-											"raw": "https://onboard-dev.bank78.co/api/business/blacklist?rcbnNumber=",
-											"protocol": "https",
-											"host": [
-												"onboard-dev",
-												"bank78",
-												"co"
-											],
-											"path": [
-												"api",
-												"business",
-												"blacklist"
-											],
-											"query": [
-												{
-													"key": "rcbnNumber",
-													"value": ""
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"rcbnNumber\" : \"\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
 												}
-											]
-										}
+											}
+										},
+										"url": "https://onboard-dev.bank78.co/api/business/blacklist"
 									},
 									"response": [
 										{
@@ -5788,27 +5805,16 @@
 												"type": "text"
 											}
 										],
-										"url": {
-											"raw": "https://onboard-dev.bank78.co/api/business/status/toggle?rcbnNumber=dhdjdjbddksk",
-											"protocol": "https",
-											"host": [
-												"onboard-dev",
-												"bank78",
-												"co"
-											],
-											"path": [
-												"api",
-												"business",
-												"status",
-												"toggle"
-											],
-											"query": [
-												{
-													"key": "rcbnNumber",
-													"value": "dhdjdjbddksk"
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"rcNumber\": \"12221\",\n    \"comment\" : \"Testing\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
 												}
-											]
-										}
+											}
+										},
+										"url": "https://onboard-dev.bank78.co/api/business/status/toggle"
 									},
 									"response": [
 										{
