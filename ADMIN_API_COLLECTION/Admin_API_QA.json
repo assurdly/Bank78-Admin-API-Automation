@@ -7125,7 +7125,7 @@
 											"script": {
 												"id": "9989ebf1-7deb-49b5-88c3-7589eb942a48",
 												"exec": [
-													"postman.setNextRequest(\"Update Customer limit\")"
+													"postman.setNextRequest(\"Blacklist identity\")"
 												],
 												"type": "text/javascript",
 												"packages": {}
@@ -9373,6 +9373,15 @@
 												"type": "text"
 											}
 										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\"username\": \"tofutea5@mailinator.com\",\n\"comment\": \"Testing\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
 										"url": {
 											"raw": "{{baseUrl}}/onboard/api/customer/blacklist?username=tofutea5@mailinator.com",
 											"host": [
@@ -9513,6 +9522,15 @@
 												"value": "text/plain"
 											}
 										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\"username\": \"gloworld2@dispostable.com\",\n\"comment\": \"Testing\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
 										"url": {
 											"raw": "https://onboard-dev.bank78.co/api/customer/blacklist?username=gloworld2@dispostable.com",
 											"protocol": "https",
@@ -9624,6 +9642,15 @@
 													"});\r",
 													""
 												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "6f2f2d21-417b-4ebe-871f-f645ae4ee3fd",
+												"exec": [],
 												"type": "text/javascript"
 											}
 										}
@@ -9646,6 +9673,15 @@
 												"value": "text/plain"
 											}
 										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
 										"url": {
 											"raw": "https://onboard-dev.bank78.co/api/customer/blacklist?username=",
 											"protocol": "https",
